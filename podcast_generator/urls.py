@@ -16,10 +16,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.contrib.auth.views import LoginView
 
 from podcast_app import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('home', views.PodcastReadView.as_view(), name='podcast_home')
+    path('home', views.PodcastReadView.as_view(), name='podcast_home'),
+    path('podcast/create', views.PodcastCreateView.as_view(), name='podcast_create'),
+    path('account/login/', LoginView.as_view(), name='login'),
+    path('account/register/', views.UserCreateView.as_view(), name='register')
 ]
