@@ -1,8 +1,15 @@
 from django.contrib.auth import authenticate, login, logout
-from django.shortcuts import render, redirect
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.http import HttpResponse
+from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib import messages
+from django.views import generic
+from .utils import get_popular_podcasts
+from .forms import PodcastChoiceForm
+
+from spotify_app import models
+
 
 # Create your views here.
 
@@ -74,5 +81,45 @@ def signout(request):
     messages.success(request, "Logged out successfully")
     return redirect('home')
 
+
+def podcast_list(request):
+    podcasts = get_popular_podcasts()
+
+    if podcasts is not None:
+        context = {'podcasts': podcasts}
+    else:
+        context = {}
+
+    return render(request, 'podcast_list.html', context)
+
+
+def question_choice(request):
+    form = PodcastChoiceForm()
+    return render(request, "question_choice.html", {'form': form})
+
+
+# funkcja służy do obsługi przesłanych danych
+def question_form_submit(request):
+    if request.method == 'POST':
+        form = PodcastChoiceForm(request.POST)
+        if form.is_valid():
+            selected_choice = form.cleaned_data['selected_choice']
+
+            return redirect('success')
+    else:
+        form = PodcastChoiceForm()
+    return render(request, 'index.html', {'form': form})
+
+
+
+
+
+
+
+
+# class PodcastReadView(PermissionRequiredMixin, generic.View):
+#     permission_required = 'podcasts.view_kurs'
+#     def get(self, request):
+#         return render(request, template_name='podcast_read.html', context={'podcasts': models.Podcast.objects.all()})
 
 
