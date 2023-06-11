@@ -4,9 +4,6 @@
 
 <head>
     <title>Podcast Generator</title>
-    {% block css_files %}
-        <link rel="stylesheet" href="{% static "style.css" %}">
-    {% endblock %}
     {% load bootstrap5 %}
     {% bootstrap_css %}
     {% bootstrap_javascript %}
@@ -56,7 +53,7 @@
     </a>
 
         <br><br>
-    <p>The Podcast Generator exclusively chooses podcasts available on the <b> Apple Podcasts</b>. Once users input their preferences,
+    <p>The Podcast Generator exclusively chooses podcasts available on the <b>Apple Podcasts</b>. Once users input their preferences,
         the Podcast Generator generates a curated list of podcast recommendations, featuring both popular shows and other otherwise go unnoticed.
         Each recommendation is accompanied by a brief description, giving users insight into the podcast's content,
         format, and host. Users can then listen to the recommended episodes directly within the Apple
